@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>My News Aggregator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <div class="search-panel">
+      <input type="text" id="search-bar" placeholder="Search...">
+      <select id="search-engine">
+        <option value="https://www.google.com/search?q=">Google</option>
+        <option value="https://www.bing.com/search?q=">Bing</option>
+        <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
+      </select>
+      <button onclick="search()">Search</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="news-tiles">
+      <h2>News</h2>
+      <div class="tile-container">
+      </div>
+    </section>
+
+    <section id="new-uploads">
+      <h2>New Uploads</h2>
+      <div class="tile-container">
+      </div>
+    </section>
+  </main>
+
+  <footer>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
