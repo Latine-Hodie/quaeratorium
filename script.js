@@ -21,6 +21,21 @@ const newsFeeds = [
   "https://news.google.com/rss/search?q=technology&hl=en&gl=US&ceid=US:en" // Google News (Technology)
 ];
 
+const tileContainer = document.querySelector("#news-tiles .tile-container");
+const numTiles = 6; // Number of tiles to create
+
+// Create empty tiles
+for (let i = 0; i < numTiles; i++) {
+  const tile = document.createElement("div");
+  tile.classList.add("tile");
+  tile.innerHTML = `
+    <img src="placeholder.jpg" alt="Placeholder">
+    <h3>Placeholder Title</h3>
+    <p>Placeholder description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  `;
+  tileContainer.appendChild(tile);
+}
+
 newsFeeds.forEach(feedUrl => {
   fetch(feedUrl)
     .then(response => response.text())
@@ -28,24 +43,24 @@ newsFeeds.forEach(feedUrl => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
       const items = xmlDoc.querySelectorAll('item');
-      items.forEach(item => {
+
+      // Update existing tiles with RSS data
+      for (let i = 0; i < items.length && i < numTiles; i++) {
+        const item = items[i];
         const title = item.querySelector('title').textContent;
         const link = item.querySelector('link').textContent;
         const description = item.querySelector('description').textContent;
         let image = item.querySelector('media:content[url]');
-        image = image ? image.getAttribute('url') : ''; // Default to empty if no image
+        image = image ? image.getAttribute('url') : ''; 
 
-        const tile = document.createElement("div");
-        tile.classList.add("tile");
-        tile.innerHTML = `
+        tileContainer.children[i].innerHTML = `
           <a href="${link}">
             <img src="${image}" alt="${title}">
             <h3>${title}</h3>
             <p>${description}</p>
           </a>
         `;
-        document.querySelector("#news-tiles .tile-container").appendChild(tile);
-      });
+      }
     })
     .catch(error => {
       console.error(`Error fetching ${feedUrl}:`, error);
@@ -57,4 +72,16 @@ newsFeeds.forEach(feedUrl => {
     });
 });
 
-// Fetch and display new uploads (logic depends on the source)
+// Do the same for "New Uploads" section
+const newUploadsContainer = document.querySelector("#new-uploads .tile-container");
+
+for (let i = 0; i < numTiles; i++) {
+  const tile = document.createElement("div");
+  tile.classList.add("tile");
+  tile.innerHTML = `
+    <img src="placeholder.jpg" alt="Placeholder">
+    <h3>Placeholder Title</h3>
+    <p>Placeholder description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  `;
+  newUploadsContainer.appendChild(tile);
+}
